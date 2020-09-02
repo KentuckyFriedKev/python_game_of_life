@@ -40,11 +40,25 @@ def display_text(text, x, y, font_size):
     textRect.center = (x,y)
     game_display.blit(textSurface, textRect)
 
+
 # Declare some colors as RGB values tuples
 black = (0,0,0)
 white = (255, 255, 255)
 light_gray = (200, 200, 200)
 dark_gray = (150, 150, 150)
+
+def button(text, x, y, b, h, ic, ac, action=None):
+    mouse = pygame.mouse.get_pos()
+    click = pygame.mouse.get_pressed()
+    if x + b > mouse[0] > x and y + h > mouse[1] > y:
+        pygame.draw.rect(game_display, ac, (x, y, b, h))
+
+        if click[0] == 1 and action != None:
+            action()
+    else:
+        pygame.draw.rect(game_display, ic, (x, y, b, h))
+    display_text(text, x + b/2, y + h/2, 20)
+
 
 # Display a cell
 # INPUTS
