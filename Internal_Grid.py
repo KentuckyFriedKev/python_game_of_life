@@ -2,17 +2,21 @@ class Grid:
     def __init__(self, rows, cols):
         self.rows = rows
         self.cols = cols
-        self.grid = [[0]*cols]*rows
+        self.grid = []
+        for i in range(rows):
+            row = []
+            for j in range(cols):
+                row.append(0)
+            self.grid.append(row)
 
     def set_status(self, x, y):
-        print("Updating grid")
         if self.grid[x][y] == 1:
             self.grid[x][y] = 0
         else:
             self.grid[x][y] = 1
 
     def update(self):
-        neighbours = [0,1,-1]
+        neighbours = [0, 1, -1]
         for i in range(self.rows):
             for j in range(self.cols):
                 live_neighbours = 0

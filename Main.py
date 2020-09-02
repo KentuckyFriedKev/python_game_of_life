@@ -57,7 +57,6 @@ def cell(x, y, i, j, b, h, dead, alive, hover):
     if x + b > mouse[0] > x and y + h > mouse[1] > y:
         pygame.draw.rect(game_display, hover, (x, y, b, h))
         if click[0] == 1:
-            print(i,j)
             grid.set_status(i, j)
     else:
         if grid.grid[i][j] == 0:
