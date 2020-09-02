@@ -3,15 +3,19 @@ import time
 from Internal_Grid import Grid
 
 pygame.init()
-grid = Grid(100,100)
+
 # Set window width and height
 display_width = 702
-display_height = 752
-
+display_height = 754
+# Set number of cells to use in game
+cell_x = 100
+cell_y = 100
+grid = Grid(cell_x,cell_y)
 
 game_display = pygame.display.set_mode((display_width, display_height))
 pygame.display.set_caption('Conway\'s Game of Life')
 clock = pygame.time.Clock()
+
 
 # Create some text to display, used by display_text
 # INPUTS
@@ -64,6 +68,17 @@ def cell(x, y, i, j, b, h, dead, alive, hover):
         else:
             pygame.draw.rect(game_display, alive, (x, y, b, h))
 
+
+def update_cells():
+    grid_x = -1
+    for i in range(2, display_width, 7):
+        grid_x += 1
+        grid_y = 0
+        for j in range(2, display_height - 52, 7):
+            cell(i, j, grid_x, grid_y, 5, 5, white, black, dark_gray)
+            grid_y += 1
+    pygame.display.update()
+
 def game_loop():
     game_exit = False
     while not game_exit:
@@ -72,15 +87,9 @@ def game_loop():
                 pygame.quit()
                 quit()
         game_display.fill(light_gray)
-        grid_x = -1
-        for i in range (2,display_width, 7):
-            grid_x += 1
-            grid_y = 0
-            for j in range(2, display_height - 50, 7):
-                cell(i, j, grid_x, grid_y, 5, 5, white, black, dark_gray)
-                grid_y += 1
-        pygame.display.update()
+        update_cells()
         clock.tick(60)
+
 
 game_loop()
 quit()
