@@ -16,20 +16,18 @@ class Grid:
             self.grid[x][y] = 1
 
     def update(self):
-        neighbours = [0, 1, -1]
+        neighbours = [(1, 0), (1, -1), (0, -1), (-1, -1), (-1, 0), (-1, 1), (0, 1), (1, 1)]
         for i in range(self.rows):
             for j in range(self.cols):
                 live_neighbours = 0
-                for k in range(3):
-                    for l in range(3):
-                        if not(neighbours[k] == 0 and neighbours[l] == 0):
-                            r = i + neighbours[k]
-                            c = j + neighbours[l]
-                            if 0 <= r < self.rows and 0 <= c < self.cols and abs(self.grid[i][j] == 1):
-                                live_neighbours += 1
+                for neighbour in neighbours:
+                    r = i + neighbour[0]
+                    c = j + neighbour[1]
+                    if 0 <= r < self.rows and 0 <= c < self.cols and abs(self.grid[r][c]) == 1:
+                        live_neighbours += 1
                 if (live_neighbours < 2 or live_neighbours > 3) and self.grid[i][j] == 1:
                     self.grid[i][j] = -1
-                if live_neighbours == 3 and self.grid[i][j]:
+                if live_neighbours == 3 and self.grid[i][j] == 0:
                     self.grid[i][j] = 2
         for i in range(self.rows):
             for j in range(self.cols):
