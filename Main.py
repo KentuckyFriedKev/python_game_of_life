@@ -11,11 +11,12 @@ display_height = 754
 cell_x = 100
 cell_y = 100
 grid = Grid(cell_x,cell_y)
-
+# Set some properties on for the window
 game_display = pygame.display.set_mode((display_width, display_height))
 pygame.display.set_caption('Conway\'s Game of Life')
 clock = pygame.time.Clock()
-
+# Create a lock so the user can't change cells when the game is updating
+lock = False
 
 # Create some text to display, used by display_text
 # INPUTS
@@ -47,13 +48,14 @@ white = (255, 255, 255)
 light_gray = (200, 200, 200)
 dark_gray = (150, 150, 150)
 
+
 def button(text, x, y, b, h, ic, ac, action=None):
     mouse = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed()
     if x + b > mouse[0] > x and y + h > mouse[1] > y:
         pygame.draw.rect(game_display, ac, (x, y, b, h))
-
-        if click[0] == 1 and action != None:
+        if click[2] == 1 and action is not None:
+            print("Button clicked")
             action()
     else:
         pygame.draw.rect(game_display, ic, (x, y, b, h))
