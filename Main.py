@@ -71,17 +71,18 @@ def button(text, x, y, b, h, ic, ac, action=None):
 # ac - (tuple - (int, int, int)) - RGB value of the color the button appears in when the mouse is over the cell
 # action - (function) - function to execute when the button is clicked
 def cell(x, y, i, j, b, h, dead, alive, hover):
-    mouse = pygame.mouse.get_pos()
-    click = pygame.mouse.get_pressed()
-    if x + b > mouse[0] > x and y + h > mouse[1] > y:
-        pygame.draw.rect(game_display, hover, (x, y, b, h))
-        if not lock and click[0] == 1:
-            grid.set_status(i, j)
-    else:
-        if grid.grid[i][j] == 0:
-            pygame.draw.rect(game_display, dead, (x, y, b, h))
+    if not lock:
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
+        if x + b > mouse[0] > x and y + h > mouse[1] > y:
+            pygame.draw.rect(game_display, hover, (x, y, b, h))
+            if click[0] == 1:
+                grid.set_status(i, j)
         else:
-            pygame.draw.rect(game_display, alive, (x, y, b, h))
+            if grid.grid[i][j] == 0:
+                pygame.draw.rect(game_display, dead, (x, y, b, h))
+            else:
+                pygame.draw.rect(game_display, alive, (x, y, b, h))
 
 
 def update_cells():
