@@ -96,12 +96,10 @@ def draw_cells():
         for j in range(2, display_height - 52, 7):
             cell(i, j, grid_x, grid_y, 5, 5, white, black, dark_gray)
             grid_y += 1
-    pygame.display.update()
 
 
 def game_loop():
     game_exit = False
-    loop_update = False
     while not game_exit:
         for event in pygame.event.get():
             print(event)
@@ -110,16 +108,10 @@ def game_loop():
                 quit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RIGHT:
-                    loop_update = True
-                    lock = True
-                if event.key == pygame.K_LEFT:
-                    loop_update = False
-                    lock = False
+                    update_cells()
         game_display.fill(light_gray)
         draw_cells()
-        while (loop_update):
-            update_cells()
-            draw_cells()
+        pygame.display.update()
         clock.tick(60)
 
 
