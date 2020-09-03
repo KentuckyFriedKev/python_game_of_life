@@ -48,14 +48,13 @@ white = (255, 255, 255)
 light_gray = (200, 200, 200)
 dark_gray = (150, 150, 150)
 
-
 def button(text, x, y, b, h, ic, ac, action=None):
     mouse = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed()
     if x + b > mouse[0] > x and y + h > mouse[1] > y:
         pygame.draw.rect(game_display, ac, (x, y, b, h))
-        if click[2] == 1 and action is not None:
-            print("Button clicked")
+
+        if click[0] == 1 and action != None:
             action()
     else:
         pygame.draw.rect(game_display, ic, (x, y, b, h))
@@ -76,7 +75,7 @@ def cell(x, y, i, j, b, h, dead, alive, hover):
     click = pygame.mouse.get_pressed()
     if x + b > mouse[0] > x and y + h > mouse[1] > y:
         pygame.draw.rect(game_display, hover, (x, y, b, h))
-        if click[0] == 1:
+        if not lock and click[0] == 1:
             grid.set_status(i, j)
     else:
         if grid.grid[i][j] == 0:
@@ -86,6 +85,9 @@ def cell(x, y, i, j, b, h, dead, alive, hover):
 
 
 def update_cells():
+    grid.update()
+
+def draw_cells():
     grid_x = -1
     for i in range(2, display_width, 7):
         grid_x += 1
@@ -95,15 +97,28 @@ def update_cells():
             grid_y += 1
     pygame.display.update()
 
+
 def game_loop():
     game_exit = False
+    loop_update = False
     while not game_exit:
         for event in pygame.event.get():
+            print(event)
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RIGHT:
+                    loop_update = True
+                    lock = True
+                if event.key == pygame.K_LEFT:
+                    loop_update = False
+                    lock = False
         game_display.fill(light_gray)
-        update_cells()
+        draw_cells()
+        while (loop_update):
+            update_cells()
+            draw_cells()
         clock.tick(60)
 
 
