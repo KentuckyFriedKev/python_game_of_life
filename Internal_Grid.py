@@ -38,3 +38,8 @@ class Grid:
                     self._grid[i][j] = 1
                 else:
                     self._grid[i][j] = 0
+
+    def clear(self):
+        for i in range(self._rows):
+            for j in range(self._cols):
+                self._grid[i][j] = 0

@@ -30,6 +30,7 @@ class Game:
         self.step_button = Button(100, 702, 100, 50, self.update_cells, "Step 1")
         self.loop_button = Button(500, 702, 100, 50, self.set_loop, "Loop")
         self.stop_button = Button(500, 702, 100, 50, self.set_loop, "Stop")
+        self.clear_button = Button(300, 702, 100, 50, self.clear_grid, "Clear")
         x = 2
         for i in range(self.cell_x):
             y = 2
@@ -41,6 +42,7 @@ class Game:
 
         self.controls.add(self.step_button)
         self.controls.add(self.loop_button)
+        self.controls.add(self.clear_button)
         self.stop.add(self.stop_button)
 
     def event_loop(self):
@@ -68,9 +70,7 @@ class Game:
     def run(self):
         while not self.game_exit:
             if self.loop:
-                self.grid.update()
-                for cell in self.cells:
-                    cell.check_status()
+                self.update_cells()
             self.event_loop()
             self.draw()
             self.clock.tick(60)
@@ -80,9 +80,16 @@ class Game:
 
     def update_cells(self):
         self.grid.update()
+        for cell in self.cells:
+            cell.check_status()
 
     def set_loop(self):
         self.loop = not self.loop
+
+    def clear_grid(self):
+        self.grid.clear()
+        for cell in self.cells:
+            cell.check_status()
 
 
 if __name__ == '__main__':
