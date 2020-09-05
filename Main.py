@@ -26,8 +26,10 @@ class Game:
         self.game_exit = False
         self.controls = pygame.sprite.Group()
         self.cells = pygame.sprite.Group()
+        self.stop = pygame.sprite.Group()
         self.step_button = Button(100, 702, 100, 50, self.update_cells, "Step 1")
         self.loop_button = Button(500, 702, 100, 50, self.set_loop, "Loop")
+        self.stop_button = Button(500, 702, 100, 50, self.set_loop, "Stop")
         x = 2
         for i in range(self.cell_x):
             y = 2
@@ -39,32 +41,39 @@ class Game:
 
         self.controls.add(self.step_button)
         self.controls.add(self.loop_button)
+        self.stop.add(self.stop_button)
 
     def event_loop(self):
         for event in pygame.event.get():
-            print(event)
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-            self.loop_button.handle_event(event)
-            for cell in self.cells:
-                cell.handle_event(event)
             if not self.loop:
-                self.step_button.handle_event(event)
+                for button in self.controls:
+                    button.handle_event(event)
+                for cell in self.cells:
+                    cell.handle_event(event)
+            else:
+                self.stop_button.handle_event(event)
 
     def draw(self):
         self.game_display.fill((200,200,200))
-        self.controls.draw(self.game_display)
+        if not self.loop:
+            self.controls.draw(self.game_display)
+        else:
+            self.stop.draw(self.game_display)
         self.cells.draw(self.game_display)
         pygame.display.update()
 
     def run(self):
         while not self.game_exit:
             if self.loop:
-                time.sleep(1)
                 self.grid.update()
+                for cell in self.cells:
+                    cell.check_status()
             self.event_loop()
             self.draw()
+            self.clock.tick(60)
 
     def quit(self):
         self.game_exit = True
