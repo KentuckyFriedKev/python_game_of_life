@@ -8,7 +8,7 @@ import pygame
 
 class Button(pygame.sprite.Sprite):
 
-    def __init__(self, x,y, width, height, action = None, text="", text_color=(0,0,0)):
+    def __init__(self, x, y, width, height, action = None, text="", text_color=(0,0,0)):
         super().__init__()
         font = pygame.font.Font('freesansbold.ttf', 24)
 
