@@ -10,17 +10,14 @@ class Button(pygame.sprite.Sprite):
 
     def __init__(self, x,y, width, height, action = None, text="", text_color=(0,0,0)):
         super().__init__()
-        image_normal = pygame.Surface((width, height))
-        image_normal.fill(pygame.Color(255,255,255))
-        image_hover = pygame.Surface((width, height))
-        image_hover.fill(pygame.Color(150,150,150))
-        image_down = pygame.Surface((width, height))
-        image_down.fill(pygame.Color(100, 100, 100))
         font = pygame.font.Font('freesansbold.ttf', 24)
 
-        self.button_normal = image_normal
-        self.button_hover = image_hover
-        self.button_down = image_down
+        self.button_normal = pygame.Surface((width, height))
+        self.button_normal.fill(pygame.Color(255,255,255))
+        self.button_hover = pygame.Surface((width, height))
+        self.button_hover.fill(pygame.Color(150,150,150))
+        self.button_down = pygame.Surface((width, height))
+        self.button_down.fill(pygame.Color(100,100,100))
         # Inherited from pygame sprite
         self.image = self.button_normal
         self.rect = self.image.get_rect(topleft=(x, y))
@@ -47,7 +44,7 @@ class Button(pygame.sprite.Sprite):
             self.pressed = False
         elif event.type == pygame.MOUSEMOTION:
             collided = self.rect.collidepoint(event.pos)
-            if collided and not self.button_down:
+            if collided and not self.pressed:
                 self.image = self.button_hover
             elif not collided:
                 self.image = self.button_normal
