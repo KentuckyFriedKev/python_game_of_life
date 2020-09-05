@@ -1,3 +1,4 @@
+# TODO: Add comments
 class Grid:
     def __init__(self, rows, cols):
         self._rows = rows

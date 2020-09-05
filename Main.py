@@ -1,3 +1,11 @@
+'''
+TODO: Add comments
+TODO: Add preset scenarios
+TODO: remove some hardcoded items (cell and button padding, number of cells etc)
+TODO: Add ability to set number of cells
+TODO: Go through everything and make optimizations (might need some help for this)
+'''
+
 import pygame
 import time
 from Button import Button
@@ -30,7 +38,7 @@ class Game:
         self.step_button = Button(100, 702, 100, 50, self.update_cells, "Step 1")
         self.loop_button = Button(500, 702, 100, 50, self.set_loop, "Loop")
         self.stop_button = Button(500, 702, 100, 50, self.set_loop, "Stop")
-        self.clear_button = Button(300, 702, 100, 50, self.clear_grid, "Clear")
+        self.clear_button = Button(202, 702, 100, 50, self.clear_grid, "Clear")
         x = 2
         for i in range(self.cell_x):
             y = 2

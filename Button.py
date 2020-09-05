@@ -1,8 +1,10 @@
+# TODO: Add comments
 """
 Class for a button in pygame
 
 Credit to skrx on Stack Overflow for the basis of this class: https://stackoverflow.com/questions/47639826/pygame-button-single-click
 """
+
 import pygame
 
 

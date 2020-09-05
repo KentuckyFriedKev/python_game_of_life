@@ -1,5 +1,8 @@
 import pygame
 
+# TODO: Add comments
+# TODO: optimize setting cells in UI (user should be able to hold mouse and set multiple cells
+
 
 class Cell(pygame.sprite.Sprite):
     def __init__(self, x,y, i, j, grid):
