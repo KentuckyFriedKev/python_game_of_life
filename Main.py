@@ -1,5 +1,6 @@
 import pygame
 import time
+from Button import Button
 from Internal_Grid import Grid
 
 pygame.init()
@@ -48,19 +49,6 @@ white = (255, 255, 255)
 light_gray = (200, 200, 200)
 dark_gray = (150, 150, 150)
 
-def button(text, x, y, b, h, ic, ac, action=None):
-    mouse = pygame.mouse.get_pos()
-    click = pygame.mouse.get_pressed()
-    if x + b > mouse[0] > x and y + h > mouse[1] > y:
-        pygame.draw.rect(game_display, ac, (x, y, b, h))
-
-        if click[0] == 1 and action != None:
-            action()
-    else:
-        pygame.draw.rect(game_display, ic, (x, y, b, h))
-    display_text(text, x + b/2, y + h/2, 20)
-
-
 # Display a cell
 # INPUTS
 # x - (int) - x coordinate of the top left corner of the cell
@@ -100,16 +88,20 @@ def draw_cells():
 
 def game_loop():
     game_exit = False
+    controls = pygame.sprite.Group()
+    step_button = Button(100, 702, 100, 50, update_cells, "Step 1")
+    controls.add(step_button)
+
     while not game_exit:
         for event in pygame.event.get():
             print(event)
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RIGHT:
-                    update_cells()
+            for button in controls:
+                button.handle_event(event)
         game_display.fill(light_gray)
+        controls.draw(game_display)
         draw_cells()
         pygame.display.update()
         clock.tick(60)
