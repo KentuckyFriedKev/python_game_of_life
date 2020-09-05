@@ -1,6 +1,7 @@
 import pygame
 import time
 from Button import Button
+from Cell import Cell
 from Internal_Grid import Grid
 
 pygame.init()
@@ -25,47 +26,25 @@ white = (255, 255, 255)
 light_gray = (200, 200, 200)
 dark_gray = (150, 150, 150)
 
-# Display a cell
-# INPUTS
-# x - (int) - x coordinate of the top left corner of the cell
-# y - (int) - y coordinate of the top left corner of the cell
-# b - (int) - length of the base of the cell
-# h - (int) - length of the height of the cell
-# ic - (tuple - (int, int, int)) - RGB value of the colo the button appears in when the mouse is not over the cell
-# ac - (tuple - (int, int, int)) - RGB value of the color the button appears in when the mouse is over the cell
-# action - (function) - function to execute when the button is clicked
-def cell(x, y, i, j, b, h, dead, alive, hover):
-    if not lock:
-        mouse = pygame.mouse.get_pos()
-        click = pygame.mouse.get_pressed()
-        if x + b > mouse[0] > x and y + h > mouse[1] > y:
-            pygame.draw.rect(game_display, hover, (x, y, b, h))
-            if click[0] == 1:
-                grid.set_status(i, j)
-        else:
-            if grid.grid[i][j] == 0:
-                pygame.draw.rect(game_display, dead, (x, y, b, h))
-            else:
-                pygame.draw.rect(game_display, alive, (x, y, b, h))
-
 
 def update_cells():
     grid.update()
-
-def draw_cells():
-    grid_x = -1
-    for i in range(2, display_width, 7):
-        grid_x += 1
-        grid_y = 0
-        for j in range(2, display_height - 52, 7):
-            cell(i, j, grid_x, grid_y, 5, 5, white, black, dark_gray)
-            grid_y += 1
 
 
 def game_loop():
     game_exit = False
     controls = pygame.sprite.Group()
+    cells = pygame.sprite.Group()
     step_button = Button(100, 702, 100, 50, update_cells, "Step 1")
+    x = 2
+    for i in range(cell_x):
+        y = 2
+        for j in range(cell_y):
+            new_cell = Cell(x,y,i,j,grid)
+            cells.add(new_cell)
+            y += 7
+        x += 7
+
     controls.add(step_button)
 
     while not game_exit:
@@ -76,9 +55,11 @@ def game_loop():
                 quit()
             for button in controls:
                 button.handle_event(event)
+            for cell in cells:
+                cell.handle_event(event)
         game_display.fill(light_gray)
         controls.draw(game_display)
-        draw_cells()
+        cells.draw(game_display)
         pygame.display.update()
         clock.tick(60)
 
