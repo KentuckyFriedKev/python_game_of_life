@@ -19,30 +19,6 @@ clock = pygame.time.Clock()
 # Create a lock so the user can't change cells when the game is updating
 lock = False
 
-# Create some text to display, used by display_text
-# INPUTS
-# text (string)- text contained by the object
-# font (pygame.font.Font)- font used by the text
-# OUTPUT
-# textSurface - the text object to be displayed on the screen
-def text_objects(text, font):
-    textSurface = font.render(text, True, black)
-    return textSurface, textSurface.get_rect()
-
-
-# Display some text
-# INPUTS
-# text (string) - text to be displayed
-# x - (int) - x coordinate of the center of the text
-# y - (int) - y coordinate of the center of the text
-# font_size (int) - font size (in px) of the text
-def display_text(text, x, y, font_size):
-    font = pygame.font.Font('freesansbold.ttf', font_size)
-    textSurface, textRect = text_objects(text, font)
-    textRect.center = (x,y)
-    game_display.blit(textSurface, textRect)
-
-
 # Declare some colors as RGB values tuples
 black = (0,0,0)
 white = (255, 255, 255)
