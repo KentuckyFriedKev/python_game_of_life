@@ -8,9 +8,9 @@ TODO: Go through everything and make optimizations (might need some help for thi
 
 import pygame
 import time
-from Button import Button
-from Cell import Cell
-from Internal_Grid import Grid
+from UI.Button import Button
+from UI.Cell import Cell
+from backend.Internal_Grid import Grid
 
 pygame.init()
 
@@ -39,6 +39,7 @@ class Game:
         self.loop_button = Button(500, 702, 100, 50, self.set_loop, "Loop")
         self.stop_button = Button(500, 702, 100, 50, self.set_loop, "Stop")
         self.clear_button = Button(202, 702, 100, 50, self.clear_grid, "Clear")
+        # Draw all the cells and add them to the cells sprite group
         x = 2
         for i in range(self.cell_x):
             y = 2
@@ -47,10 +48,11 @@ class Game:
                 self.cells.add(new_cell)
                 y += 7
             x += 7
-
+        # Add in the step, loop and clear the buttons to the controls sprite group
         self.controls.add(self.step_button)
         self.controls.add(self.loop_button)
         self.controls.add(self.clear_button)
+        # Add the stop button to the stop sprite group
         self.stop.add(self.stop_button)
 
     def event_loop(self):
