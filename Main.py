@@ -1,9 +1,9 @@
 '''
 TODO: Add comments
 TODO: Add preset scenarios
-TODO: remove some hardcoded items (cell and button padding, number of cells etc)
+TODO: remove some hardcoded items (cell and button padding, number of cells, etc)
 TODO: Add ability to set number of cells
-TODO: Go through everything and make optimizations (might need some help for this)
+TODO: Go through everything and make optimizations and style improvements (might need some help for this)
 '''
 
 import pygame
@@ -81,6 +81,7 @@ class Game:
         while not self.game_exit:
             if self.loop:
                 self.update_cells()
+                time.sleep(0.05)
             self.event_loop()
             self.draw()
             self.clock.tick(60)
